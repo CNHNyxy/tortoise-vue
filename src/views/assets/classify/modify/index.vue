@@ -1,15 +1,15 @@
 <template>
     <div>
         <el-container  style="height: 200px; border: 1px solid #eee">
-            <el-main class="container">
+            <el-main>
                 <el-form :model="selectData" ref="form">
                     <el-row :gutter="20">
-                        <el-col :span="12">
+                        <el-col :span="5">
                             <el-form-item label="资产分类">
                             <el-select v-model="selectData.CategoryID" placeholder="请选择"></el-select>
                              </el-form-item>
                         </el-col>
-                        <el-col :span="12">
+                        <el-col :span="10">
                             <el-form-item label="间隔时间1">
                                 <el-date-picker
                                 v-model="selectData.date"
@@ -22,7 +22,7 @@
                         </el-col>
                     </el-row>
                     <el-row>
-                        <el-col :offset="10">
+                        <el-col>
                             <el-form-item>
                                 <el-button type="primary" @click="submitInput">提交</el-button>
                             </el-form-item>
@@ -33,22 +33,25 @@
         </el-container>
         <el-container style="border: 1px solid #eee">
             <el-main>
-                <el-row class="container">
-                    <el-col :span="22">
+                <el-row>
+                    <el-col :span="24">
                         <el-button size="small" @click="windos.addWindos = true">新增</el-button>
                     </el-col>
                 </el-row>
-                <el-row class="container">
-                        <el-col :span="22">
-                            <el-table :data="tableData" border style="width: 1200px" max-height="450">
+                <el-row>
+                        <el-col :span="24">
+                            <el-table :data="tableData" border style="width: 100%" max-height="1000">
                                 <el-table-column type="selection" width="55"></el-table-column>
-                                <el-table-column fixed prop="UserName" label="用户" width="150"></el-table-column>
-                                <el-table-column  prop="CategoryName" label="资产分类名称" width="150"></el-table-column>
-                                <el-table-column  prop="AssetName" label="资产名称" width="150"></el-table-column>
-                                <el-table-column  prop="AssetType" label="资产类型" width="150"></el-table-column>
-                                <el-table-column sortable prop="MarketValue" label="市值" width="150"></el-table-column>
-                                <el-table-column sortable prop="Cost" label="成本" width="150"></el-table-column>
-                                <el-table-column sortable prop="Profit" label="收益" width="150"></el-table-column>
+                                <el-table-column fixed prop="date" label="购买日期" width="200"></el-table-column>
+                                <!-- <el-table-column  prop="UserName" label="用户" width="150"></el-table-column> -->
+                                <el-table-column  prop="categoryName" label="资产分类名称" width="200"></el-table-column>
+                                <el-table-column  prop="assetName" label="资产名称" width="200"></el-table-column>
+                                <el-table-column  prop="currency" label="货币类型" width="200"></el-table-column>
+                                <!-- <el-table-column  prop="AssetType" label="资产类型" width="150"></el-table-column> -->
+                                <el-table-column sortable prop="marketValue" label="市值" width="200"></el-table-column>
+                                <el-table-column sortable prop="amount" label="资产金额" width="200"></el-table-column>
+                                <el-table-column sortable prop="cost" label="成本" width="200"></el-table-column>
+                                <el-table-column sortable prop="profit" label="收益" width="200"></el-table-column>
                                 <el-table-column fixed="right" label="操作" width="100">
                                     <template slot-scope="scope">
                                         <el-button type="text" size="small" @click="tableHandle(scope.$index, scope.row,0)">编辑</el-button>
@@ -98,6 +101,7 @@
 </style>
 
 <script>
+import { getAssetsList } from '@/api/asset'
 export default {
     methods: {
         tableAdd(addData){
@@ -135,7 +139,12 @@ export default {
             }
         },
         submitInput(){
-            console.log(this.selectData);
+            console.log(this.selectData)
+            console.log(this.tableData)
+            getAssetsList(this.selectData).then(response => {
+                console.log(response)
+                this.tableData = response.assetVoList
+            })
         }
     },
     data() {
@@ -151,98 +160,11 @@ export default {
 
             },
             selectData:{
-                CategoryID: '',
+                UserID: 1,
+                CategoryID: 1,
                 date: ''
             },
-            tableData: [{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '1',
-                Cost: '1',
-                Profit: '1',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2',
-                Cost: '2',
-                Profit: '2',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '3',
-                Cost: '3',
-                Profit: '3',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                },{
-                UserName: '2016-05-03',
-                CategoryName: '2016-05-03',
-                AssetName: '2016-05-03',
-                AssetType: '2016-05-03',
-                MarketValue: '2016-05-03',
-                Cost: '2016-05-03',
-                Profit: '2016-05-03',
-                }]
+            tableData: []
         }
     }
 }
