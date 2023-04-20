@@ -143,7 +143,7 @@ export default {
             console.log(this.tableData)
             getAssetsList(this.selectData).then(response => {
                 console.log(response)
-                this.tableData = response.assetVoList
+                this.tableData = response.msg
             })
         }
     },
