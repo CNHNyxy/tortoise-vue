@@ -7,3 +7,10 @@ export function getAssetsList(data) {
     data
   })
 }
+export function getAssetCategoryList(data) {
+  return request({
+    url: '/asset/assetcategory',
+    method: 'get',
+    data
+  })
+}
