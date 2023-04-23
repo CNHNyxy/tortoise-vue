@@ -75,48 +75,57 @@
             :visible.sync="windos.addWindos"
             width="80%"
             center
-            :closed="addClose">
+            :before-close="addClose">
             <span>
-                <el-form :model="installDate" ref="form">
+                <el-form :model="installDate" ref="installDate" :rules="rules">
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="资产名称">
+                            <el-form-item label="资产名称" prop="AssetName">
                                 <el-input v-model="installDate.AssetName" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="资产分类">
-                                <el-input v-model="installDate.CategoryID" placeholder="请输入内容"></el-input>
+                            <el-form-item label="资产分类" prop="CategoryID">
+                                <el-select v-model="installDate.CategoryID" style="width: 100%;" filterable placeholder="请选择">
+                                <el-option 
+                                    
+                                    v-for="item in CategoryData"
+                                    :key="item.categoryID"
+                                    :label="item.categoryName"
+                                    :value="item.categoryID"
+                                    >
+                                </el-option>
+                            </el-select>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="货币类型">
+                            <el-form-item label="货币类型" prop="Currency">
                                 <el-input v-model="installDate.Currency" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="成本">
+                            <el-form-item label="成本" prop="Cost">
                                 <el-input v-model="installDate.Cost" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="市值">
+                            <el-form-item label="市值" prop="MarketValue">
                                 <el-input v-model="installDate.MarketValue" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="收益">
+                            <el-form-item label="收益" prop="Profit">
                                 <el-input v-model="installDate.Profit" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
-                    <el-row :gutter="20" class="er" >
+                    <el-row :gutter="20" class="er">
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="资产金额">
+                            <el-form-item label="资产金额" prop="Amount2">
                                 <el-input v-model="installDate.Amount" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
@@ -124,8 +133,8 @@
                 </el-form>
             </span>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="windos.addWindos = false">取 消</el-button>
-                <el-button type="primary" @click="tableAdd(addData)">新增</el-button>
+                <el-button @click="addClose(1)">取 消</el-button>
+                <el-button type="primary" @click="tableAdd(installDate,'installDate')">新增</el-button>
             </span>
         </el-dialog>
         <el-dialog
@@ -168,7 +177,7 @@
 </style>
 
 <script>
-import { getAssetsList,getAssetCategoryList } from '@/api/asset'
+import { getAssetsList,getAssetCategoryList,getAddAsset } from '@/api/asset'
 export default {
     created: function(){
         console.log(11111)
@@ -180,8 +189,19 @@ export default {
         })
     },
     methods: {
-        tableAdd(addData){
-            window.addWindos = false
+        tableAdd(addData,tableName){
+            console.log(addData)
+            this.$refs[tableName].validate((valid) => {
+                if (valid) {
+                    getAddAsset(addData).then(rep=>{
+                        console.log(rep)
+                        this.windos.addWindos = false
+                    })
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });  
         },
         tableHandle(index,row,flag) {
             if(flag == 1){
@@ -227,17 +247,25 @@ export default {
             for (var key in obj) {
                 obj[key] = '';
             }
-            done()
+            console.log(this.installDate)
+            if(done != 1){
+                done()
+            }else{
+                this.windos.addWindos = false
+            }
+            
         }
     },
     data() {
         return {
+            rules:{
+                AssetName: [
+                    { required: true, message: '请选择活动区域', trigger: 'change' }
+                ]
+            },
             windos:{
                 addWindos:false,
                 editWindos:false
-            },
-            addData:{
-
             },
             editData:{
 
@@ -248,6 +276,7 @@ export default {
                 date: ''
             },
             installDate:{
+                UserID: 1,
                 AssetName:'',
                 CategoryID:'',
                 Amount:'',

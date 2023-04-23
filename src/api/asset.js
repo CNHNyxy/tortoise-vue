@@ -14,3 +14,11 @@ export function getAssetCategoryList(data) {
     data
   })
 }
+
+export function getAddAsset(data) {
+  return request({
+    url: '/asset/addasset',
+    method: 'post',
+    data
+  })
+}
