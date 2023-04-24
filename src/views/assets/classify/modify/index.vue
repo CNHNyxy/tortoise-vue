@@ -6,14 +6,14 @@
                     <el-row :gutter="20">
                         <el-col :span="5">
                             <el-form-item label="资产分类">
-                            <el-select v-model="selectData.CategoryID" placeholder="请选择">
-                                <el-option
+                                <el-select v-model="selectData.CategoryID" placeholder="请选择">
+                                    <el-option
                                     v-for="item in CategoryData"
-                                    :key="item.categoryID"
+                                    :key="item.categoryId"
                                     :label="item.categoryName"
-                                    :value="item.categoryID">
-                                </el-option>
-                            </el-select>
+                                    :value="item.categoryId">
+                                    </el-option>
+                                </el-select>
                              </el-form-item>
                         </el-col>
                         <el-col :span="10">
@@ -49,7 +49,7 @@
                         <el-col :span="24">
                             <el-table :data="tableData" border style="width: 100%" max-height="1000">
                                 <el-table-column type="selection" width="55"></el-table-column>
-                                <el-table-column fixed prop="create_time" label="购买日期" width="200"></el-table-column>
+                                <el-table-column fixed prop="createTime" label="购买日期" width="200"></el-table-column>
                                 <!-- <el-table-column  prop="UserName" label="用户" width="150"></el-table-column> -->
                                 <el-table-column  prop="categoryName" label="资产分类名称" width="200"></el-table-column>
                                 <el-table-column  prop="assetName" label="资产名称" width="200"></el-table-column>
@@ -80,53 +80,51 @@
                 <el-form :model="installDate" ref="installDate" :rules="rules">
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="资产名称" prop="AssetName">
-                                <el-input v-model="installDate.AssetName" placeholder="请输入内容"></el-input>
+                            <el-form-item label="资产名称" prop="assetName">
+                                <el-input v-model="installDate.assetName" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="资产分类" prop="CategoryID">
-                                <el-select v-model="installDate.CategoryID" style="width: 100%;" filterable placeholder="请选择">
-                                <el-option 
-                                    
+                            <el-form-item label="资产分类" prop="categoryId">
+                                <el-select v-model="installDate.categoryId" placeholder="请选择">
+                                    <el-option
                                     v-for="item in CategoryData"
-                                    :key="item.categoryID"
+                                    :key="item.categoryId"
                                     :label="item.categoryName"
-                                    :value="item.categoryID"
-                                    >
-                                </el-option>
-                            </el-select>
+                                    :value="item.categoryId">
+                                    </el-option>
+                                </el-select>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="货币类型" prop="Currency">
-                                <el-input v-model="installDate.Currency" placeholder="请输入内容"></el-input>
+                            <el-form-item label="货币类型" prop="currency">
+                                <el-input v-model="installDate.currency" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="成本" prop="Cost">
-                                <el-input v-model="installDate.Cost" placeholder="请输入内容"></el-input>
+                            <el-form-item label="成本" prop="cost">
+                                <el-input v-model="installDate.cost" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="市值" prop="MarketValue">
-                                <el-input v-model="installDate.MarketValue" placeholder="请输入内容"></el-input>
+                            <el-form-item label="市值" prop="marketValue">
+                                <el-input v-model="installDate.marketValue" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
-                            <el-form-item label="收益" prop="Profit">
-                                <el-input v-model="installDate.Profit" placeholder="请输入内容"></el-input>
+                            <el-form-item label="收益" prop="profit">
+                                <el-input v-model="installDate.profit" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20" class="er">
                         <el-col :span="11" :offset="1">
-                            <el-form-item label="资产金额" prop="Amount2">
-                                <el-input v-model="installDate.Amount" placeholder="请输入内容"></el-input>
+                            <el-form-item label="资产金额" prop="amount">
+                                <el-input v-model="installDate.amount" placeholder="请输入内容"></el-input>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -235,6 +233,7 @@ export default {
             }
         },
         submitInput(){
+            console.log(this.CategoryID)
             console.log(this.selectData)
             console.log(this.tableData)
             getAssetsList(this.selectData).then(response => {
@@ -272,18 +271,20 @@ export default {
             },
             selectData:{
                 UserID: 1,
-                CategoryID: 1,
-                date: ''
+                CategoryID: '',
+                date: '',
+                index: 0,
+                size: 10
             },
             installDate:{
-                UserID: 1,
-                AssetName:'',
-                CategoryID:'',
-                Amount:'',
-                Currency:'',
-                MarketValue:'',
-                Cost:'',
-                Profit:''
+                userId: 1,
+                assetName:'',
+                categoryId:'',
+                amount:'',
+                currency:'',
+                marketValue:'',
+                cost:'',
+                profit:''
             },
             tableData: [],
             CategoryData:[]
