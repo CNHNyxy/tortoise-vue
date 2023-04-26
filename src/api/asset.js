@@ -14,10 +14,24 @@ export function getAssetCategoryList(data) {
     data
   })
 }
-
-export function getAddAsset(data) {
+export function getCurrencyList(data) {
+  return request({
+    url: '/asset/currency',
+    method: 'get',
+    data
+  })
+}
+export function addAsset(data) {
   return request({
     url: '/asset/addasset',
+    method: 'post',
+    data
+  })
+}
+
+export function updateAsset(data) {
+  return request({
+    url: '/asset/updateasset',
     method: 'post',
     data
   })
