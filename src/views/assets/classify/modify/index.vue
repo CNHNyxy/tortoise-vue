@@ -6,12 +6,21 @@
                     <el-row :gutter="20">
                         <el-col :span="5">
                             <el-form-item label="资产分类">
+<<<<<<< HEAD
                                 <el-select v-model="selectData.categoryId" placeholder="请选择">
                                     <el-option
                                         v-for="item in CategoryData"
                                         :key="item.categoryId"
                                         :label="item.categoryName"
                                         :value="item.categoryId">
+=======
+                                <el-select v-model="selectData.CategoryID" placeholder="请选择">
+                                    <el-option
+                                    v-for="item in CategoryData"
+                                    :key="item.categoryId"
+                                    :label="item.categoryName"
+                                    :value="item.categoryId">
+>>>>>>> 39f069fb42d3a3a2a2c649dc09c9a61e547343b7
                                     </el-option>
                                 </el-select>
                              </el-form-item>
@@ -86,6 +95,7 @@
                         </el-col>
                         <el-col :span="11">
                             <el-form-item label="资产分类" prop="categoryId">
+<<<<<<< HEAD
                                 <el-select v-model="installDate.categoryId" style="width: 100%;" filterable placeholder="请选择">
                                 <el-option 
                                     v-for="item in CategoryData"
@@ -95,11 +105,22 @@
                                     >
                                 </el-option>
                             </el-select>
+=======
+                                <el-select v-model="installDate.categoryId" placeholder="请选择">
+                                    <el-option
+                                    v-for="item in CategoryData"
+                                    :key="item.categoryId"
+                                    :label="item.categoryName"
+                                    :value="item.categoryId">
+                                    </el-option>
+                                </el-select>
+>>>>>>> 39f069fb42d3a3a2a2c649dc09c9a61e547343b7
                             </el-form-item>
                         </el-col>
                     </el-row>
                     <el-row :gutter="20" class="er" >
                         <el-col :span="11" :offset="1">
+<<<<<<< HEAD
                             <el-form-item label="货币类型" prop="currencyId">
                                 <el-select v-model="installDate.currencyId" style="width: 100%;" filterable placeholder="请选择">
                                 <el-option 
@@ -110,6 +131,10 @@
                                     >
                                 </el-option>
                             </el-select>
+=======
+                            <el-form-item label="货币类型" prop="currency">
+                                <el-input v-model="installDate.currency" placeholder="请输入内容"></el-input>
+>>>>>>> 39f069fb42d3a3a2a2c649dc09c9a61e547343b7
                             </el-form-item>
                         </el-col>
                         <el-col :span="11">
@@ -323,6 +348,7 @@ export default {
             }
         },
         submitInput(){
+            console.log(this.CategoryID)
             console.log(this.selectData)
             console.log(this.tableData)
             getAssetsList(this.selectData).then(response => {
@@ -359,6 +385,7 @@ export default {
 
             },
             selectData:{
+<<<<<<< HEAD
                 userId: 1,
                 categoryId: '',
                 date: '',
@@ -371,6 +398,20 @@ export default {
                 categoryId:'',
                 amount:'',
                 currencyId:'',
+=======
+                UserID: 1,
+                CategoryID: '',
+                date: '',
+                index: 0,
+                size: 10
+            },
+            installDate:{
+                userId: 1,
+                assetName:'',
+                categoryId:'',
+                amount:'',
+                currency:'',
+>>>>>>> 39f069fb42d3a3a2a2c649dc09c9a61e547343b7
                 marketValue:'',
                 cost:'',
                 profit:''
